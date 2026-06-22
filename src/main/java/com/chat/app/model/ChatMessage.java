@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 public class ChatMessage {
     private Long id;
     private String sender;
-    private String content ;
+    private String content;
 }
