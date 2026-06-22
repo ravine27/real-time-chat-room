@@ -319,7 +319,9 @@
 
     function connect() {
 
-        var socket = new SockJS('/chat');
+        var socket = new SockJS(
+            window.location.origin + "/chat"
+        );
 
         stompClient = Stomp.over(socket);
 
