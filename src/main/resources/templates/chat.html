@@ -291,11 +291,11 @@
 
     function connect() {
 
-        var socket = new SockJS(
-            window.location.origin + "/chat"
-        );
+        var scheme = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+        var wsUrl = scheme + window.location.host + "/chat";
 
-        stompClient = Stomp.over(socket);
+        // Try native WebSocket first
+        stompClient = Stomp.client(wsUrl);
         stompClient.debug = null; // Suppress debug logging
 
         stompClient.connect({}, function () {
@@ -308,6 +308,30 @@
 
             });
 
+        }, function (error) {
+            console.warn("Native WebSocket failed. Falling back to SockJS...", error);
+
+            // Fallback to SockJS if native WebSocket fails
+            var socket = new SockJS(
+                window.location.origin + "/chat"
+            );
+
+            stompClient = Stomp.over(socket);
+            stompClient.debug = null; // Suppress debug logging
+
+            stompClient.connect({}, function () {
+
+                setConnected(true);
+
+                stompClient.subscribe('/topic/messages', function (message) {
+
+                    showMessage(JSON.parse(message.body));
+
+                });
+
+            }, function (fallbackError) {
+                console.error("SockJS connection also failed:", fallbackError);
+            });
         });
     }
 
