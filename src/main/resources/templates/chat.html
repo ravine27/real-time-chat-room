@@ -292,7 +292,7 @@
     function connect() {
 
         var scheme = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
-        var wsUrl = scheme + window.location.host + "/chat";
+        var wsUrl = scheme + window.location.host + "/chat/websocket";
 
         // Try native WebSocket first
         stompClient = Stomp.client(wsUrl);
