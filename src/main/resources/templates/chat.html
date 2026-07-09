@@ -304,9 +304,15 @@
 
             stompClient.subscribe('/topic/messages', function (message) {
 
-                showMessage(JSON.parse(message.body));
+    const data = JSON.parse(message.body);
 
-            });
+    const latency = Date.now() - data.sentTime;
+
+    console.log("Latency:", latency + " ms");
+
+    showMessage(data);
+
+});
 
         }, function (error) {
             console.warn("Native WebSocket failed. Falling back to SockJS...", error);
