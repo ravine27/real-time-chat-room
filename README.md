@@ -22,6 +22,8 @@ The application uses the STOMP protocol for structured message handling and Sock
 - 🚀 Cloud deployment using Railway
 - 📱 Cross-browser compatibility
 
- 
+ ## Analysis
+
+ Performed end-to-end performance analysis of a deployed Spring Boot WebSocket application on Railway, measuring 76 real-world message exchanges with an average delivery latency of ~559 ms.
 
 
